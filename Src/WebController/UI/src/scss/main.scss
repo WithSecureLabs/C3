@@ -1,0 +1,58 @@
+@import './fonts.scss';
+@import './mixins.scss';
+@import './colors.scss';
+
+@import './components/button.scss';
+
+html, body {
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+  font-weight: normal;
+  background-color: $color-grey-bg;
+  color: $color-grey-400;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+* {
+  font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+  outline: none !important;
+  background-color: inherit;
+}
+
+span.icon {
+  display: block;
+  width: 24px;
+  height: 24px;
+  // color, hover-color, size, hover-size?
+  @include generate-gray-icons("828282", "828282", 24px);
+  @include generate-white-icons("FFFFFF", "FFFFFF", 24px);
+  @include generate-red-icons("BF0001", "BF0001", 24px);
+  @include generate-purple-icons("AB61F6", "AB61F6", 24px);
+}
+
+label.icon {
+  // size, hover-size?, colors hard coded...
+  @include generate-checkbox-icons(20px);
+}
+
+.c3link.c3link {
+  color: $color-green-c3;
+  cursor: pointer;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.flex-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

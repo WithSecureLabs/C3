@@ -1,0 +1,34 @@
+/* tslint:disable no-unused-expression */
+import { expect } from 'chai';
+import { shallowMount, createLocalVue } from '@vue/test-utils';
+import Vuex from 'vuex';
+import VeeValidate from 'vee-validate';
+
+import Input from '@/components/form/Input.vue';
+import { modules } from '../../store/mockstore';
+
+const localVue = createLocalVue();
+localVue.use(Vuex);
+localVue.use(VeeValidate, {
+  inject: false,
+  validity: true,
+});
+
+describe('@/components/form/Input.vue', () => {
+  const store = new Vuex.Store({
+    modules,
+  });
+
+  it('Input is a Vue instance', () => {
+    const wrapper = shallowMount(Input, {
+      propsData: {
+        legend: 'legend...perPage',
+        help: 'help text...',
+      },
+      store,
+      localVue,
+      sync: false,
+    });
+    expect(wrapper.isVueInstance()).to.be.true;
+  });
+});

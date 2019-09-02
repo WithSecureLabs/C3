@@ -1,0 +1,151 @@
+@import "./svg-icons.scss";
+@import './colors.scss';
+
+$exclamation: "exclamation";
+$close: "close";
+$fullscreen: "fullscreen";
+$zoomin: "zoomin";
+$carrotup: "carrotup";
+$carrotdown: "carrotdown";
+$menudots: "more";
+$help: "help";
+$rand: "random";
+$back: "back";
+$checkbox: "checkbox";
+$upload: "upload";
+$warning: "warning";
+$return-info: "return";
+$add-comment: "add-comment";
+
+@mixin generate-checkbox-icons($size, $hover-size: $size) {
+  &.#{$checkbox}-on {
+    @include checkboxon("0DF2A4", $size);
+    &:hover {
+      @include checkboxon("0DF2A4", $hover-size);
+    }
+  }
+  &.#{$checkbox}-on--disabled {
+    @include checkboxon("1B6C51", $size);
+    &:hover {
+      @include checkboxon("1B6C51", $hover-size);
+    }
+  }
+  &.#{$checkbox}-off {
+    @include checkboxoff("FFFFFF", $size);
+    &:hover {
+      @include checkboxoff("FFFFFF", $hover-size);
+    }
+  }
+  &.#{$checkbox}-off--disabled {
+    @include checkboxoff("4F4F4F", $size);
+    &:hover {
+      @include checkboxoff("4F4F4F", $hover-size);
+    }
+  }
+}
+
+@mixin generate-gray-icons($color, $hover-color, $size, $hover-size: $size) {
+  &.#{$exclamation} {
+    @include exclamation($color, $size);
+    &:hover {
+      @include exclamation($hover-color, $hover-size);
+    }
+  }
+
+  &.#{$help} {
+    @include help($color, $size);
+    &:hover {
+      @include help("FFFFFF", $hover-size);
+    }
+  }
+
+  &.#{$close} {
+    @include close($color, $size);
+    &:hover {
+      @include close($hover-color, $hover-size);
+    }
+  }
+
+  &.#{$carrotup} {
+    @include carrotup($color, $size);
+    &:hover {
+      @include carrotup($hover-color, $hover-size);
+    }
+  }
+
+  &.#{$carrotdown} {
+    @include carrotdown($color, $size);
+    &:hover {
+      @include carrotdown($hover-color, $hover-size);
+    }
+  }
+
+  &.#{$rand} {
+    @include rand($color, $size);
+    &:hover {
+      @include rand('FFFFFF', $hover-size);
+    }
+  }
+
+  &.#{$upload} {
+    @include upload($color, $size);
+    &:hover {
+      @include upload('FFFFFF', $hover-size);
+    }
+  }
+
+  &.#{$back} {
+    @include left($color, $size);
+    &:hover {
+      @include left($hover-color, $hover-size);
+    }
+  }
+
+  &.#{$add-comment} {
+    @include add-comment($color, $size);
+    &:hover {
+      @include add-comment($hover-color, $hover-size);
+    }
+  }
+}
+
+@mixin generate-white-icons($color, $hover-color, $size, $hover-size: $size) {
+  &.#{$fullscreen} {
+    @include fullscreen($color, $size);
+    &:hover {
+      @include fullscreen($hover-color, $hover-size);
+    }
+  }
+
+  &.#{$zoomin} {
+    @include zoomin($color, $size);
+    &:hover {
+      @include zoomin($hover-color, $hover-size);
+    }
+  }
+
+  &.#{$menudots} {
+    @include menudots($color, $size);
+    &:hover {
+      @include menudots($hover-color, $hover-size);
+    }
+  }
+}
+
+@mixin generate-red-icons($color, $hover-color, $size, $hover-size: $size) {
+  &.#{$warning} {
+    @include warning($color, $size);
+    &:hover {
+      @include warning($hover-color, $hover-size);
+    }
+  }
+}
+
+@mixin generate-purple-icons($color, $hover-color, $size, $hover-size: $size) {
+  &.#{$return-info} {
+    @include exclamation($color, $size);
+    &:hover {
+      @include exclamation($hover-color, $hover-size);
+    }
+  }
+}

@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{5cc52339-4b11-47df-b1db-18fbcf057123}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\C3\Interfaces\Channels\Slack.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\C3\Interfaces\Channels\UncShareFile.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\C3\Interfaces\Connectors\MockServer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\C3\Interfaces\Connectors\TeamServer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\C3\Interfaces\Peripherals\Mock.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\C3\Interfaces\Peripherals\Beacon.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\C3\Internals\Interface.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\C3\Internals\InterfaceFactory.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\CppTools\ByteVector.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\CppTools\ByteView.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\CppTools\Encryption.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\CppTools\Utils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\Crypto\Sodium.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\Slack\SlackApi.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\Sockets\AddrInfo.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\Sockets\DuplexConnection.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\Sockets\InitializeSockets.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\Sockets\Socket.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\WinTools\AbstractService.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\WinTools\HostInfo.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\WinTools\Pipe.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\WinTools\Proxy.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\WinTools\Services.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MWR\WinTools\StructuredExceptionHandling.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ADVobfuscator\Indexes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ADVobfuscator\Inline.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ADVobfuscator\MetaRandom.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ADVobfuscator\MetaString.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)C3_BUILD_VERSION_HASH_PART.hxx" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CppCodec\base32_default_crockford.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CppCodec\base64_default_rfc4648.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CppRestSdk\include\cpprest\http_client.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)json\json.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libSodium\include\sodium.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\C3\Interfaces\Channels\Slack.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\C3\Interfaces\Channels\UncShareFile.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\C3\Interfaces\Peripherals\Beacon.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\C3\Internals\AutomaticRegistrator.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\C3\Internals\BackendCommons.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\C3\Internals\HasConstructor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\C3\Internals\Interface.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\C3\Internals\Interface.hxx" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\C3\Internals\InterfaceFactory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\C3\Interfaces\Peripherals\Mock.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\C3\PrecompiledHeader.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\C3\Sdk.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\CppTools\ByteArray.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\CppTools\ByteVector.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\CppTools\ByteView.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\CppTools\Encryption.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\CppTools\Hash.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\CppTools\Payload.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\CppTools\PrecompiledHeader.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\CppTools\SafeSmartPointerContainer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\CppTools\ScopeGuard.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\SecureString.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\CppTools\Utils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\CppTools\XError.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\Crypto\Base32.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\Crypto\Base64.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\Crypto\Crypto.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\Crypto\EncryptionKey.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\Crypto\Nonce.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\Crypto\PrecompiledHeader.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\Crypto\Sodium.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\PrecompiledHeader.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\Slack\SlackApi.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\Sockets\AddrInfo.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\Sockets\DuplexConnection.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\Sockets\InitializeSockets.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\Sockets\PrecompiledHeader.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\Sockets\Socket.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\Sockets\SocketsException.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\Sockets\Sockets.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\WinTools\AbstractService.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\WinTools\HostInfo.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\WinTools\Pipe.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\WinTools\Proxy.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\WinTools\PrecompiledHeader.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\WinTools\Services.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\WinTools\StructuredExceptionHandling.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\WinTools\UniqueHandle.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWR\WinTools\XError.h" />
+  </ItemGroup>
+</Project>

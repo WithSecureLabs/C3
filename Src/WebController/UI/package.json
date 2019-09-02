@@ -1,0 +1,44 @@
+{
+  "name": "c3",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "core-js": "^2.6.5",
+    "md5": "^2.2.1",
+    "pluralize": "^8.0.0",
+    "vee-validate": "^2.2.9",
+    "vis": "^4.21.0",
+    "vue": "^2.6.10",
+    "vue-class-component": "^7.0.2",
+    "vue-property-decorator": "^8.1.0",
+    "vuex": "^3.0.1",
+    "vuex-class": "^0.3.2"
+  },
+  "devDependencies": {
+    "@types/md5": "^2.1.33",
+    "@types/pluralize": "^0.0.29",
+    "@types/chai": "^4.1.0",
+    "@types/mocha": "^5.2.4",
+    "@types/sinon": "^7.0.11",
+    "@types/vis": "^4.21.15",
+    "@vue/cli-plugin-babel": "^3.7.0",
+    "@vue/cli-plugin-typescript": "^3.7.0",
+    "@vue/cli-plugin-unit-mocha": "^3.7.0",
+    "@vue/cli-service": "^3.7.0",
+    "@vue/test-utils": "1.0.0-beta.28",
+    "canvas": "^2.5.0",
+    "chai": "^4.1.2",
+    "sass": "^1.18.0",
+    "sass-loader": "^7.1.0",
+    "sinon": "^7.3.2",
+    "typescript": "^3.4.3",
+    "vue-template-compiler": "^2.5.21"
+  }
+}

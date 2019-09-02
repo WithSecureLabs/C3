@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <RootNamespace>MWR.C3.WebController</RootNamespace>
+    <AssemblyName>C3WebController</AssemblyName>
+    <Configurations>Debug;Release;ReleaseWithDebInfo</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\..\Bin\WebController\Debug</OutputPath>
+	<IntermediateOutputPath>..\..\..\Tmp\WebController\Debug</IntermediateOutputPath>
+    <DefineConstants>TRACE;s</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\..\Bin\WebController\Release</OutputPath>
+	<IntermediateOutputPath>..\..\..\Tmp\WebController\Release</IntermediateOutputPath>
+    <DefineConstants>TRACE;s</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseWithDebInfo|AnyCPU'">
+    <OutputPath>..\..\..\Bin\WebController\Release</OutputPath>
+    <IntermediateOutputPath>..\..\..\Tmp\WebController\Release</IntermediateOutputPath>
+    <DefineConstants>TRACE;s</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20190524095413_GetewayCapabilities.cs" />
+    <Compile Remove="Migrations\20190524095413_GetewayCapabilities.Designer.cs" />
+    <Compile Remove="Migrations\20190524095729_GetewayCapabilities.cs" />
+    <Compile Remove="Migrations\20190524095729_GetewayCapabilities.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\PayloadTemplates\Gateway_d64.exe" />
+    <None Remove="Resources\PayloadTemplates\Gateway_d86.exe" />
+    <None Remove="Resources\PayloadTemplates\NodeRelayConsoleExe_d64.exe" />
+    <None Remove="Resources\PayloadTemplates\NodeRelayConsoleExe_d86.exe" />
+    <None Remove="Resources\PayloadTemplates\NodeRelayDll_d64.dll" />
+    <None Remove="Resources\PayloadTemplates\NodeRelayDll_d86.dll" />
+    <None Remove="Resources\PayloadTemplates\NodeRelayReflectiveDll_d64.dll" />
+    <None Remove="Resources\PayloadTemplates\NodeRelayReflectiveDll_d86.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Nito.AsyncEx" Version="5.0.0" />
+    <PackageReference Include="Serilog" Version="2.8.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="2.1.1" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
+    <PackageReference Include="Sodium.Core" Version="1.2.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\PayloadTemplates\" />
+  </ItemGroup>
+
+</Project>
