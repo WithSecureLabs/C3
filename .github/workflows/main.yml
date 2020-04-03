@@ -1,0 +1,33 @@
+name: All
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Build C3 (MSVC)
+    strategy:
+      matrix:
+        platfom: [x86, x64]
+        configuration: [Debug, ReleaseWithDebugInfo, Release]
+        configurationClang: [ClangDebug, ClangRwdi, ClangRelease]
+    runs-on: windows-latest
+    
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Build MSVC
+      shell: cmd
+      run: |
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" Src "/t:restore" "/p:Platform=${{ matrix.platfom }}" "/p:Configuration="${{ matrix.configuration }}"
+        
+    - name: Build Clang
+      shell: cmd
+      run: |
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" Src "/t:restore" "/p:Platform=${{ matrix.platfom }}" "/p:Configuration="${{ matrix.configurationClang }}"
+        
