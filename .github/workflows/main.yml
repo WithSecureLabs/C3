@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         platfom: [x86, x64]
-        configuration: [Debug, ReleaseWithDebugInfo, Release]
+        configuration: [Debug, ReleaseWithDebInfo, Release]
         configurationClang: [ClangDebug, ClangRwdi, ClangRelease]
     runs-on: windows-latest
     
