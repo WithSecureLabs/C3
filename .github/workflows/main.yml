@@ -1,4 +1,4 @@
-name: All
+name: Build C3 (MSVC)
 
 on:
   push:
@@ -13,21 +13,20 @@ jobs:
       matrix:
         platfom: [x86, x64]
         configuration: [Debug, ReleaseWithDebInfo, Release]
-        configurationClang: [ClangDebug, ClangRwdi, ClangRelease]
     runs-on: windows-latest
     
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: Checkout
       uses: actions/checkout@v2
+    
+    - name: Dotnet restore
+      shell: cmd
+      run: |
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" Src/C3.sln
 
     - name: Build MSVC
       shell: cmd
       run: |
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" Src "/t:restore" "/p:Platform=${{ matrix.platfom }}" "/p:Configuration="${{ matrix.configuration }}"
-        
-    - name: Build Clang
-      shell: cmd
-      run: |
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" Src "/t:restore" "/p:Platform=${{ matrix.platfom }}" "/p:Configuration="${{ matrix.configurationClang }}"
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" Src/C3.sln "/p:Platform=${{ matrix.platfom }}" "/p:Configuration="${{ matrix.configuration }}"
         
