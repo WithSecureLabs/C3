@@ -23,7 +23,7 @@ jobs:
     - name: Dotnet restore
       shell: cmd
       run: |
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" Src/C3.sln
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" Src/C3.sln "/t:restore"
 
     - name: Build MSVC
       shell: cmd
