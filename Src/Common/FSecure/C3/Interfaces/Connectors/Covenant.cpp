@@ -244,18 +244,30 @@ FSecure::C3::Interfaces::Connectors::Covenant::Covenant(ByteView arguments)
 		this->m_ListeningPostAddress = url.substr(start, end - start);
 
 		///Create the bridge listener
-		url = this->m_webHost + OBF("/listener/createbridge");
+		url = this->m_webHost + OBF("/api/listeners/bridge");
+
 		web::http::client::http_client webClientBridge(utility::conversions::to_string_t(url), config);
 		request = web::http::http_request(web::http::methods::POST);
-		request.headers().set_content_type(utility::conversions::to_string_t(OBF("application/x-www-form-urlencoded")));
+		request.headers().set_content_type(utility::conversions::to_string_t(OBF("application/json")));
 
 		std::string authHeader = OBF("Bearer ") + this->m_token;
 		request.headers().add(OBF(L"Authorization"), utility::conversions::to_string_t(authHeader));
 
-		std::string createBridgeString = "Id=0&GUID=b85ea642f2&ListenerTypeId=2&Status=Active&CovenantToken=&Description=A+Bridge+for+custom+listeners.&Name=C3Bridge&BindAddress=0.0.0.0&BindPort=" + \
-			std::to_string(this->m_ListeningPostPort) + "&ConnectPort=" + std::to_string(this->m_ListeningPostPort) + "&ConnectAddresses%5B0%5D=" + \
-			this->m_ListeningPostAddress + "&ProfileId=3";
-		request.set_body(utility::conversions::to_string_t(createBridgeString));
+		json createBridgeData;
+		createBridgeData[OBF("isBridgeConnected")] = false;
+		createBridgeData[OBF("id")] = 0;
+		createBridgeData[OBF("name")] = OBF("C3Bridge");
+		createBridgeData[OBF("guid")] = OBF("b85ea642f2");
+		createBridgeData[OBF("description")] = OBF("A Bridge for custom listeners.");
+		createBridgeData[OBF("bindAddress")] = OBF("0.0.0.0");
+		createBridgeData[OBF("bindPort")] = this->m_ListeningPostPort;
+		createBridgeData[OBF("connectAddresses")] = { this->m_ListeningPostAddress };
+		createBridgeData[OBF("connectPort")] = this->m_ListeningPostPort;
+		createBridgeData[OBF("profileId")] = 3;
+		createBridgeData[OBF("listenerTypeId")] = 2;
+		createBridgeData[OBF("Status")] = OBF("Active");
+
+		request.set_body(utility::conversions::to_string_t(createBridgeData.dump()));
 
 		task = webClientBridge.request(request);
 		resp = task.get();
