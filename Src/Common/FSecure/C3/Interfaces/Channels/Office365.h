@@ -36,8 +36,8 @@ namespace FSecure::C3::Interfaces::Channels
 			FSecure::Utils::DebugPrint(OBF("Using m_ClientId: ") + Convert<Utf8>(m_ClientId.Decrypt()));
 			FSecure::Utils::DebugPrint(OBF("Using m_UserAgent: ") + Convert<Utf8>(m_UserAgent.Decrypt()));
 
-			// Initial requesting of the refresh token
-			RefreshRefreshToken();
+			// Initial requesting of the tokens
+			RefreshTokensUsingUsernamePassword();
 		}
 
 		/// Get channel capability.
@@ -65,11 +65,21 @@ namespace FSecure::C3::Interfaces::Channels
 				RemoveItem(element.at(OBF("id")));
 		}
 
-		/// Requests a new refresh token using username+password. Also refreshes the access token.
-		/// @throws std::exception if token cannot be refreshed.
-		void RefreshRefreshToken()
+		/// Save access & refresh tokens from JSON response
+		void SaveTokens(FSecure::json data) {
+			int32_t timeToNextRefresh = data[OBF("expires_in")].get<int32_t>();
+			m_AccessTokenExpiryTime = FSecure::Utils::TimeSinceEpoch() + timeToNextRefresh; // Set the new expiry time for this access token
+			m_AccessToken = data[OBF("access_token")].get<std::string>();
+			m_RefreshToken = data[OBF("refresh_token")].get<std::string>();
+			FSecure::Utils::DebugPrint(OBF("Refresh token refreshed."));
+			FSecure::Utils::DebugPrint(OBF("Access token refreshed; new refresh in ") + std::to_string(timeToNextRefresh) + OBF(" seconds."));
+		}
+
+		/// Requests new refresh & tokens using username+password.
+		/// @throws std::exception if tokens cannot be refreshed.
+		void RefreshTokensUsingUsernamePassword()
 		{
-			FSecure::Utils::DebugPrint(OBF("Refreshing refresh token."));
+			FSecure::Utils::DebugPrint(OBF("Refreshing tokens using username/password"));
 			try {
 				auto webClient = HttpClient{ Convert<Utf16>(Derived::TokenEndpoint.Decrypt()), m_ProxyConfig };
 
@@ -90,29 +100,24 @@ namespace FSecure::C3::Interfaces::Channels
 				auto resp = webClient.Request(request);
 
 				if (resp.GetStatusCode() == StatusCode::OK) {
-					auto data = json::parse(resp.GetData());
-					m_AccessTokenExpiryTime = FSecure::Utils::TimeSinceEpoch() + data[OBF("expires_in")].get<int32_t>(); // Set the new expiry time for this access token
-					m_AccessToken = data[OBF("access_token")].get<std::string>();
-					m_RefreshToken = data[OBF("refresh_token")].get<std::string>();
-					FSecure::Utils::DebugPrint(OBF("Refresh token refreshed."));
-					FSecure::Utils::DebugPrint(OBF("Access token refreshed; new refresh in ") + std::to_string(data[OBF("expires_in")].get<int32_t>()) + OBF(" seconds."));
+					SaveTokens(json::parse(resp.GetData()));
 				}
 				else 
 				{
-					throw std::runtime_error{ OBF("Non 200 response: ") + std::to_string(resp.GetStatusCode()) + OBF("\n") + ((std::string) resp.GetData()) };
+					throw std::runtime_error{ OBF("Non 200 response: ") + std::to_string(resp.GetStatusCode()) + OBF("\r\n") + ((std::string) resp.GetData()) };
 				}
 			}
 			catch (std::exception& exception)
 			{
-				throw std::runtime_error{ OBF_STR("Cannot refresh the refresh token: ") + exception.what() };
+				throw std::runtime_error{ OBF_STR("Cannot refresh tokens using username/password: ") + exception.what() };
 			}
 		}
 
-		/// Requests a new access token using the refresh token
-		/// @throws std::exception if access token cannot be refreshed.
-		void RefreshAccessToken()
+		/// Requests new tokens using the refresh token
+		/// @throws std::exception if tokens cannot be refreshed.
+		void RefreshTokensUsingRefreshToken()
 		{
-			FSecure::Utils::DebugPrint(OBF("Refreshing access token."));
+			FSecure::Utils::DebugPrint(OBF("Refreshing tokens using refresh token"));
 			try
 			{
 				auto webClient = HttpClient{ Convert<Utf16>(Derived::TokenEndpoint.Decrypt()), m_ProxyConfig };
@@ -131,18 +136,13 @@ namespace FSecure::C3::Interfaces::Channels
 				request.SetData(ContentType::ApplicationXWwwFormUrlencoded, { requestBody.begin(), requestBody.end() });
 				auto resp = webClient.Request(request);
 
-				if (resp.GetStatusCode() == StatusCode::Unauthorized)
-				{
-					FSecure::Utils::DebugPrint(OBF("Refresh token expired, requesting a new one using username+password."));
-					RefreshRefreshToken();
-				}
-				else
-				{
+				if (resp.GetStatusCode() != StatusCode::Unauthorized) {
 					EvaluateResponse(resp, false);
-					auto data = json::parse(resp.GetData());
-					m_AccessToken = data[OBF("access_token")].get<std::string>();
-					m_AccessTokenExpiryTime = FSecure::Utils::TimeSinceEpoch() + data[OBF("expires_in")].get<int32_t>(); // Set the new expiry time for this access token
-					FSecure::Utils::DebugPrint(OBF("Access token refreshed; new refresh in ") + std::to_string(data[OBF("expires_in")].get<int32_t>()) + OBF(" seconds."));
+					SaveTokens(json::parse(resp.GetData()));
+				}
+				else {
+					FSecure::Utils::DebugPrint(OBF("Refreshing tokens using refresh token failed; trying username+password"));
+					RefreshTokensUsingUsernamePassword();
 				}
 			}
 			catch (std::exception& exception)
@@ -155,7 +155,6 @@ namespace FSecure::C3::Interfaces::Channels
 		/// @throws std::exception describing incorrect response if occurred.
 		void EvaluateResponse(WinHttp::HttpResponse const& resp, bool tryRefreshingToken = true)
 		{
-
 			if (resp.GetStatusCode() == StatusCode::OK || resp.GetStatusCode() == StatusCode::Created)
 				return;
 
@@ -170,12 +169,12 @@ namespace FSecure::C3::Interfaces::Channels
 			if (resp.GetStatusCode() == StatusCode::Unauthorized)
 			{
 				if (tryRefreshingToken)
-					RefreshAccessToken();
+					RefreshTokensUsingRefreshToken();
 				throw std::runtime_error{ OBF("HTTP 401 - Token being refreshed") }; // Throwing an exception will retry the operation
 			}
 
 			if (resp.GetStatusCode() == StatusCode::BadRequest)
-				throw std::runtime_error{ OBF("Bad Request") };
+				throw std::runtime_error{ OBF("HTTP 400 - Bad Request\r\n") + ((std::string) resp.GetData()) };
 
 			throw std::runtime_error{ OBF("Non 200 response:") + std::to_string(resp.GetStatusCode()) };
 		}
@@ -187,7 +186,7 @@ namespace FSecure::C3::Interfaces::Channels
 			if (m_AccessTokenExpiryTime <= FSecure::Utils::TimeSinceEpoch()) {
 				// Access token has expired, let's request a new one
 				FSecure::Utils::DebugPrint(OBF("Access token expired, refreshing!"));
-				RefreshAccessToken();
+				RefreshTokensUsingRefreshToken();
 			}
 			auto request = HttpRequest{ method };
 			request.SetHeader(Header::Authorization, Convert<Utf16>(OBF_SEC("Bearer ") + m_AccessToken.Decrypt()));
